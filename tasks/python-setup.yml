@@ -1,0 +1,41 @@
+- name: Install python
+  become: true
+  apt:
+    name:
+      - python3
+      - python3-pip
+      - python3-venv
+  tags:
+    - install
+    - python
+
+- name: Install pipx
+  ansible.builtin.pip:
+    name:
+      - pipx
+    extra_args: "--user"
+  tags:
+    - install
+    - python
+
+- name: Uninstall all pipx packages
+  shell: pipx uninstall-all
+  tags:
+    - install
+    - python
+
+- name: Install python programs
+  command: pipx install "{{ item }}"
+  with_items:
+    - ipython
+    - black
+    - poetry
+  tags:
+    - install
+    - python
+
+- name: Configure poetry
+  command: poetry config virtualenvs.in-project true
+  tags:
+    - install
+    - python

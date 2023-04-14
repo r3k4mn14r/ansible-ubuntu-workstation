@@ -1,0 +1,31 @@
+- name: Ensure fonts directory exists
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.fonts"
+    state: directory
+  tags:
+    - install
+    - font
+
+- name: SauceCodePro exists
+  shell: "ls {{ lookup('env', 'HOME') }}/.fonts/SauceCodePro*Nerd*Font*Complete*"
+  register: saucecodepro_exists
+  ignore_errors: yes
+  tags:
+    - install
+    - font
+
+- name: Download SauceCodePro
+  when: saucecodepro_exists is failed
+  ansible.builtin.unarchive:
+    src: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/SourceCodePro.zip
+    dest: "{{ lookup('env', 'HOME') }}/.fonts/"
+    remote_src: yes
+  tags:
+    - install
+    - font
+
+- name: Update font-cache
+  command: fc-cache -fv
+  tags:
+    - install
+    - font

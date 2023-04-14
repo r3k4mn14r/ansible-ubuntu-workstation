@@ -1,0 +1,14 @@
+- name: Setup dev tools
+  become: true
+  apt: 
+    name:
+      - tmux
+      - tldr
+      - ripgrep
+      - fd-find
+      - xclip
+      - git
+      - bat
+  tags:
+    - install
+    - tools

@@ -1,0 +1,31 @@
+- name: Install system packages 1
+  become: true
+  apt:
+    name:
+      - build-essential
+      - cmake
+      - pkg-config
+      - libpthread-stubs0-dev
+      - unzip
+      - libtool
+      - libtool-bin
+      - gettext
+      - curl
+      - htop
+      - git
+      - software-properties-common
+  tags:
+    - install
+    - base
+
+- name: Create home directory structure
+  file:
+    path: "{{ lookup('env', 'HOME') }}/{{ item }}"
+    state: directory
+    mode: '0755' 
+  with_items:
+    - bin
+    - workspace
+  tags:
+    - install
+    - base

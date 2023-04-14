@@ -1,0 +1,51 @@
+- name: Install neovim build dependencies
+  become: true
+  apt:
+    name:
+      - ninja-build
+      - gettext
+      - cmake
+      - ccache
+      - unzip
+      - curl
+  tags:
+    - install
+    - neovim
+
+
+- name: Download neovim
+  ansible.builtin.git:
+    repo: https://github.com/neovim/neovim.git
+    dest: "/tmp/neovim"
+    version: stable
+  tags:
+    - install
+    - neovim
+
+- name: Build neovim
+  become: true
+  community.general.make:
+    chdir: /tmp/neovim
+  tags:
+    - install
+    - neovim
+
+- name: Install neovim
+  become: true
+  community.general.make:
+    chdir: /tmp/neovim
+    target: install
+    params:
+      CMAKE_INSTALL_PREFIX: "{{ lookup('env', 'HOME') }}/.local/nvim"
+  tags:
+    - install
+    - neovim
+
+- name: Create packer directory
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.local/share/nvim/site/autoload"
+    state: directory
+    mode: '0755' 
+  tags:
+    - install
+    - neovim
