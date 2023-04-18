@@ -6,6 +6,14 @@
     - install
     - rust
 
+- name: Remove previous build directory if exists
+  file:
+    path: /tmp/sh.rustup.rs
+    state: absent
+  tags:
+    - install
+    - rust
+
 - name: Download rustup
   when: cargo_exists is failed
   get_url:

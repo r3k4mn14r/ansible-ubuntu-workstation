@@ -12,11 +12,18 @@
     - install
     - neovim
 
+- name: Remove previous build directory if exists
+  file:
+    path: /tmp/neovim
+    state: absent
+  tags:
+    - install
+    - neovim
 
 - name: Download neovim
   ansible.builtin.git:
     repo: https://github.com/neovim/neovim.git
-    dest: "/tmp/neovim"
+    dest: /tmp/neovim
     version: stable
   tags:
     - install
