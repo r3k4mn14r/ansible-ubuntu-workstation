@@ -7,6 +7,8 @@
     - rust
 
 - name: Remove previous build directory if exists
+  when: cargo_exists is failed
+  become: true
   file:
     path: /tmp/sh.rustup.rs
     state: absent

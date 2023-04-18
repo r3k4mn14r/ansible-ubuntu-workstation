@@ -13,6 +13,7 @@
     - neovim
 
 - name: Remove previous build directory if exists
+  become: true
   file:
     path: /tmp/neovim
     state: absent
