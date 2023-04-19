@@ -15,7 +15,7 @@
 - name: Remove previous build directory if exists
   become: true
   file:
-    path: /tmp/neovim
+    path: "{{ lookup('env', 'HOME') }}/tmp_build/neovim"
     state: absent
   tags:
     - install
@@ -24,7 +24,7 @@
 - name: Download neovim
   ansible.builtin.git:
     repo: https://github.com/neovim/neovim.git
-    dest: /tmp/neovim
+    dest: "{{ lookup('env', 'HOME') }}/tmp_build/neovim"
     version: stable
   tags:
     - install
@@ -33,7 +33,7 @@
 - name: Build neovim
   become: true
   community.general.make:
-    chdir: /tmp/neovim
+    chdir: "{{ lookup('env', 'HOME') }}/tmp_build/neovim"
   tags:
     - install
     - neovim
@@ -41,10 +41,19 @@
 - name: Install neovim
   become: true
   community.general.make:
-    chdir: /tmp/neovim
+    chdir: "{{ lookup('env', 'HOME') }}/tmp_build/neovim"
     target: install
     params:
       CMAKE_INSTALL_PREFIX: "{{ lookup('env', 'HOME') }}/.local/nvim"
+  tags:
+    - install
+    - neovim
+
+- name: Delete tmp build directory
+  become: true
+  file:
+    path: "{{ lookup('env', 'HOME') }}/tmp_build/neovim"
+    state: absent
   tags:
     - install
     - neovim

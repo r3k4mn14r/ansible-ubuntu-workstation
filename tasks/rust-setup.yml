@@ -10,7 +10,7 @@
   when: cargo_exists is failed
   become: true
   file:
-    path: /tmp/sh.rustup.rs
+    path: "{{ lookup('env', 'HOME') }}/tmp_build/sh.rustup.rs"
     state: absent
   tags:
     - install
@@ -20,7 +20,7 @@
   when: cargo_exists is failed
   get_url:
     url: https://sh.rustup.rs
-    dest: /tmp/sh.rustup.rs
+    dest: "{{ lookup('env', 'HOME') }}/tmp_build/sh.rustup.rs"
     mode: '0755'
     force: 'yes'
   tags:
@@ -29,7 +29,17 @@
 
 - name: install rust/cargo
   when: cargo_exists is failed
-  shell: /tmp/sh.rustup.rs -y
+  shell: "{{ lookup('env', 'HOME') }}/tmp_build/sh.rustup.rs -y"
+  tags:
+    - install
+    - rust
+
+- name: Remove previous build directory if exists
+  when: cargo_exists is failed
+  become: true
+  file:
+    path: "{{ lookup('env', 'HOME') }}/tmp_build/sh.rustup.rs"
+    state: absent
   tags:
     - install
     - rust
