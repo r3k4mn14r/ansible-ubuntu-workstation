@@ -10,6 +10,7 @@
   git:
     repo: git@github.com:r3k4mn14r/dotfiles.git
     dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
+    force: true
     recursive: yes
     update: yes
     accept_hostkey: yes
