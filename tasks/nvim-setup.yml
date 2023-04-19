@@ -37,7 +37,7 @@
     chdir: "{{ lookup('env', 'HOME') }}/tmp_build/neovim"
     target: install
     params:
-      CMAKE_INSTALL_PREFIX: "{{ lookup('env', 'HOME') }}/.local"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
   tags:
     - install
     - neovim
