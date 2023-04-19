@@ -12,20 +12,13 @@
     - install
     - neovim
 
-- name: Remove previous build directory if exists
-  become: true
-  file:
-    path: "{{ lookup('env', 'HOME') }}/tmp_build/neovim"
-    state: absent
-  tags:
-    - install
-    - neovim
-
 - name: Download neovim
   ansible.builtin.git:
     repo: https://github.com/neovim/neovim.git
     dest: "{{ lookup('env', 'HOME') }}/tmp_build/neovim"
     version: stable
+    force: true
+    update: true
   tags:
     - install
     - neovim
