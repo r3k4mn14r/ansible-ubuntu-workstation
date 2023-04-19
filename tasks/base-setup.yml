@@ -14,6 +14,7 @@
       - htop
       - git
       - software-properties-common
+      - npm
   tags:
     - install
     - base
