@@ -34,11 +34,11 @@
     - install
     - rust
 
-- name: Remove previous build directory if exists
+- name: Delete tmp build directory
   when: cargo_exists is failed
   become: true
   file:
-    path: "{{ lookup('env', 'HOME') }}/tmp_build/sh.rustup.rs"
+    path: "{{ lookup('env', 'HOME') }}/tmp_build"
     state: absent
   tags:
     - install

@@ -52,7 +52,7 @@
 - name: Delete tmp build directory
   become: true
   file:
-    path: "{{ lookup('env', 'HOME') }}/tmp_build/neovim"
+    path: "{{ lookup('env', 'HOME') }}/tmp_build"
     state: absent
   tags:
     - install
