@@ -20,12 +20,14 @@
 
 - name: Uninstall all pipx packages
   shell: pipx uninstall-all
+  chdir: "{{ lookup('env', 'HOME') }}/.local/bin"
   tags:
     - install
     - python
 
 - name: Install python programs
   command: pipx install "{{ item }}"
+  chdir: "{{ lookup('env', 'HOME') }}/.local/bin"
   with_items:
     - ipython
     - black
