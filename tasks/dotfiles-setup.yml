@@ -23,6 +23,7 @@
   shell: "stow -D -t {{ lookup('env', 'HOME') }} -d {{ lookup('env', 'HOME') }}/.dotfiles {{ item }}"
   with_items:
     - tmux
+    - zsh
     - nvim
     - ipython
   tags:
@@ -33,6 +34,7 @@
   shell: "stow -t {{ lookup('env', 'HOME') }} -d {{ lookup('env', 'HOME') }}/.dotfiles {{ item }}"
   with_items:
     - tmux
+    - zsh
     - nvim
     - ipython
   tags:
