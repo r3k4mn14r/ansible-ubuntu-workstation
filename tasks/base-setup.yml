@@ -32,6 +32,6 @@
 
 - name: Set bash to vi-mode
   lineinfile:
-    - dest: "{{ lookup('env', 'HOME')/.bash_profile"
-      line: set -o vi && bind '"jk":vi-movement-mode'
-      state: present
+    dest: "{{ lookup('env', 'HOME')/.bash_profile"
+    line: set -o vi && bind '"jk":vi-movement-mode'
+    state: present
